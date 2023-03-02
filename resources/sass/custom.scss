@@ -1,0 +1,41 @@
+.navbar-brand {
+    color: #4429a6;
+    font-family: cursive;
+    font-weight: 900;
+}
+
+.card-header {
+    color: crimson;
+    font-size: 120%;
+    font-style: italic;
+}
+.card-body button {
+    margin-top: 5px;
+    float: right;
+}
+.row-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &__basic {
+        display: flex;
+        flex-direction: column;
+        small {
+            color: gray;
+            font-style: italic;
+            font-size: 70%;
+        }
+    }
+    &__btns {
+        display: flex;
+    }
+    .btn {
+        margin: 3px;
+        &.btn-info {
+            transform: rotate(2deg);
+        }
+        &.btn-danger {
+            transform: rotate(-1deg);
+        }
+    }
+}
