@@ -8,6 +8,10 @@ use App\Http\Requests\UpdateMechanicRequest;
 
 class MechanicController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -63,7 +67,7 @@ class MechanicController extends Controller
      */
     public function edit(Mechanic $mechanic)
     {
-        //
+        return view('mechanic.edit', ['mechanic' => $mechanic]);
     }
 
     /**
@@ -75,7 +79,10 @@ class MechanicController extends Controller
      */
     public function update(UpdateMechanicRequest $request, Mechanic $mechanic)
     {
-        //
+        $mechanic->name = $request->mechanic_name;
+        $mechanic->surname = $request->mechanic_surname;
+        $mechanic->save();
+        return redirect()->route('mechanic.index');
     }
 
     /**
@@ -86,6 +93,10 @@ class MechanicController extends Controller
      */
     public function destroy(Mechanic $mechanic)
     {
-        //
+        if ($mechanic->getTrucks->count()) {
+            return 'Trinti negalima, nes turi sunkvezimiu.';
+        }
+        $mechanic->delete();
+        return redirect()->route('mechanic.index');
     }
 }

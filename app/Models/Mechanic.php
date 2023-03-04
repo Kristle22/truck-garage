@@ -10,7 +10,7 @@ class Mechanic extends Model
 {
     use HasFactory;
 
-    // public function getTrucks() {
-    //    return $this->hasMany(Truck::class, 'mechanic_id', 'id');
-    // }
+    public function getTrucks() {
+       return $this->hasMany(Truck::class, 'mechanic_id', 'id');
+    }
 }

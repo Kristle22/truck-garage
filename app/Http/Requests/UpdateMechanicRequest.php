@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class UpdateMechanicRequest extends FormRequest
 {
@@ -13,7 +14,7 @@ class UpdateMechanicRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return Request::user();
     }
 
     /**

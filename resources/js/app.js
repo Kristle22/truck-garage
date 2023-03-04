@@ -37,3 +37,10 @@ app.component('example-component', ExampleComponent);
  */
 
 app.mount('#app');
+
+// SUMMERNOTE LOADING FUNCTION
+
+$(document).ready(function () {
+  $('[name=truck_mechanic_notices]').summernote();
+});
+

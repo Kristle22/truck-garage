@@ -14,7 +14,7 @@
                                     <div class="row-item">
                                         <div class="row-item__basic">
                                             <span>{{ $mechanic->name }} {{ $mechanic->surname }}</span>
-                                            @if ($mechanic->getTrucks)
+                                            @if ($mechanic->getTrucks->count())
                                                 <small>Works on {{ $mechanic->getTrucks->count() }} trucks.</small>
                                             @else
                                                 <small>Currently has no trucks.</small>
