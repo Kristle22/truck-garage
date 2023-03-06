@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Mechanic;
 use App\Http\Requests\StoreMechanicRequest;
 use App\Http\Requests\UpdateMechanicRequest;
+use App\Models\Mechanic;
+use Validator;
 
 class MechanicController extends Controller
 {
@@ -19,7 +20,8 @@ class MechanicController extends Controller
      */
     public function index()
     {
-        $mechanics = Mechanic::all();
+        $mechanics = Mechanic::orderBy('surname')->get();
+        // $mechanics = $mechanics->sortByDesc('surname');
         return view('mechanic.index', ['mechanics' => $mechanics]);
     }
 
@@ -41,11 +43,25 @@ class MechanicController extends Controller
      */
     public function store(StoreMechanicRequest $request)
     {
+       $validator = Validator::make($request->all(),
+       [
+           'mechanic_name' => ['required', 'min:3', 'max:64'],
+           'mechanic_surname' => ['required', 'min:2', 'max:64'],
+       ],
+        [
+        'mechanic_surname.min' => 'Surname must consists of at least 2 characters.'
+        ]
+       );
+       if ($validator->fails()) {
+           $request->flash();
+           return redirect()->back()->withErrors($validator);
+       }
+
         $mechanic = new Mechanic;
         $mechanic->name = $request->mechanic_name;
         $mechanic->surname = $request->mechanic_surname;
         $mechanic->save();
-        return redirect()->route('mechanic.index');
+        return redirect()->route('mechanic.index')->with('success_message', 'Naujas mechanikas sekmingai priimtas!');;
     }
 
     /**
@@ -79,10 +95,23 @@ class MechanicController extends Controller
      */
     public function update(UpdateMechanicRequest $request, Mechanic $mechanic)
     {
+        $validator = Validator::make($request->all(),
+        [
+            'mechanic_name' => ['required', 'min:3', 'max:64'],
+            'mechanic_surname' => ['required', 'min:2', 'max:64'],
+        ],
+        [
+        'mechanic_surname.min' => 'Surname must consists at least of 2 characters.'
+        ]
+        );
+        if ($validator->fails()) {
+            $request->flash();
+            return redirect()->back()->withErrors($validator);
+        }
         $mechanic->name = $request->mechanic_name;
         $mechanic->surname = $request->mechanic_surname;
         $mechanic->save();
-        return redirect()->route('mechanic.index');
+        return redirect()->route('mechanic.index')->with('success_message', 'Mechaniko info sekmingai atnaujinta.');;
     }
 
     /**
@@ -94,9 +123,11 @@ class MechanicController extends Controller
     public function destroy(Mechanic $mechanic)
     {
         if ($mechanic->getTrucks->count()) {
-            return 'Trinti negalima, nes turi sunkvezimiu.';
+           
+            return redirect()->route('mechanic.index')->with('info_message', 'Trinti negalima, nes turi sunkvezimiu.');
+
         }
         $mechanic->delete();
-        return redirect()->route('mechanic.index');
+        return redirect()->route('mechanic.index')->with('success_message', 'Mechanikas sekmingai ištrintas.');;
     }
 }
