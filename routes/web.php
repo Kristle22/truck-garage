@@ -39,6 +39,6 @@ Route::group(['prefix' => 'mechanics'], function(){
     Route::get('show/{truck}', [TruckController::class, 'show'])->name('truck.show');
  });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
