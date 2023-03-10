@@ -36,11 +36,12 @@ class DatabaseSeeder extends Seeder
         }
 
         $minYear = Carbon::now()->subYears(40)->format('Y');
+        $currYear = Carbon::now()->format('Y');
         foreach(range(1, 200) as $_) {
             DB::table('trucks')->insert([
                 'maker' => $faker->company,
                 'plate' => $faker->vehicleRegistration,
-                'make_year' => $faker->year($max = 'now', $min = $minYear),
+                'make_year' => $faker->numberBetween($minYear, $currYear),
                 'mechanic_notices' => $faker->realText(rand(50, 100)),
                 'mechanic_id' => rand(1, $mechCount)
             ]);
