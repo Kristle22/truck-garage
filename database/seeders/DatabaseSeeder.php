@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create('lt_LT');
+        $faker = Faker::create('en_EN');
         $faker->addProvider(new \Faker\Provider\Fakecar($faker));
 
         DB::table('users')->insert([
@@ -37,9 +37,11 @@ class DatabaseSeeder extends Seeder
 
         $minYear = Carbon::now()->subYears(40)->format('Y');
         $currYear = Carbon::now()->format('Y');
+        $makers = ['Tesla', 'Toyota', 'Porsche', 'Volkswagen', 'Mersedes-Benz', 'BMW', 'Ferrari', 'Ford', 'Honda', 'Hyundai', 'Kia', 'Suzuki Motor', 'Nissan', 'Volvo Car', 'Subaru', 'Renault', 'Isuzu', 'Polaris', 'Mitsubishi Motors', 'Mazda'];
+
         foreach(range(1, 200) as $_) {
             DB::table('trucks')->insert([
-                'maker' => $faker->company,
+                'maker' => $makers[rand(0, count($makers)-1)],
                 'plate' => $faker->vehicleRegistration,
                 'make_year' => $faker->numberBetween($minYear, $currYear),
                 'mechanic_notices' => $faker->realText(rand(50, 100)),
