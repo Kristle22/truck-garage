@@ -15,6 +15,8 @@ use Illuminate\Http\Request;
 
 class TruckController extends Controller
 {
+    const PAGE_COUNT = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -24,29 +26,37 @@ class TruckController extends Controller
     {
         if ($request->sort) {
             if ('maker' == $request->sort && 'asc' == $request->sort_dir) {
-                $trucks = Truck::orderBy('maker')->get();
+                $trucks = Truck::orderBy('maker')->paginate(self::PAGE_COUNT)->withQueryString()
+;
             }
             else if ('maker' == $request->sort && 'desc' == $request->sort_dir) {
-                $trucks = Truck::orderBy('maker', 'desc')->get();
+                $trucks = Truck::orderBy('maker', 'desc')->paginate(self::PAGE_COUNT)->withQueryString()
+;
             }
             else if ('plate' == $request->sort && 'asc' == $request->sort_dir) {
-                $trucks = Truck::orderBy('plate')->get();
+                $trucks = Truck::orderBy('plate')->paginate(self::PAGE_COUNT)->withQueryString()
+;
             }
             else if ('plate' == $request->sort && 'desc' == $request->sort_dir) {
-                $trucks = Truck::orderBy('plate', 'desc')->get();
+                $trucks = Truck::orderBy('plate', 'desc')->paginate(self::PAGE_COUNT)->withQueryString()
+;
             }
             else if ('make_year' == $request->sort && 'asc' == $request->sort_dir) {
-                $trucks = Truck::orderBy('make_year')->get();
+                $trucks = Truck::orderBy('make_year')->paginate(self::PAGE_COUNT)->withQueryString()
+;
             }
             else if ('make_year' == $request->sort && 'desc' == $request->sort_dir) {
-                $trucks = Truck::orderBy('make_year', 'desc')->get();
+                $trucks = Truck::orderBy('make_year', 'desc')->paginate(self::PAGE_COUNT)->withQueryString()
+;
             }
             else {
-                $trucks = Truck::all();  
+                $trucks = Truck::paginate(self::PAGE_COUNT)->withQueryString()
+;  
             }
         }
         else if ($request->filter && 'mechanic' == $request->filter) {
-            $trucks = Truck::where('mechanic_id', $request->mechanic_id)->get();
+            $trucks = Truck::where('mechanic_id', $request->mechanic_id)->paginate(self::PAGE_COUNT)->withQueryString()
+;
         } 
         else if ($request->search && 'all' == $request->search) {
 
@@ -54,7 +64,8 @@ class TruckController extends Controller
             if (count($words) == 1) {
             $trucks = Truck::where('maker', 'like', '%'.$request->s.'%')
             ->orWhere('plate', 'like', '%'.$request->s.'%')
-            ->orWhere('make_year', 'like', '%'.$request->s.'%')->get();
+            ->orWhere('make_year', 'like', '%'.$request->s.'%')->paginate(self::PAGE_COUNT)->withQueryString()
+;
             } elseif (count($words) == 2) {
                 $trucks = Truck::where(function($query) use ($words) {
                     $query->where('maker', 'like', '%'.$words[0].'%')
@@ -65,7 +76,8 @@ class TruckController extends Controller
                 $query->where('maker', 'like', '%'.$words[1].'%')
                 ->orWhere('plate', 'like', '%'.$words[1].'%')
                 ->orWhere('make_year', 'like', '%'.$words[1].'%');
-                })->get();
+                })->paginate(self::PAGE_COUNT)->withQueryString()
+;
             } else {
                 $trucks = Truck::where(function($query) use ($words) {
                     $query->where('maker', 'like', '%'.$words[0].'%')
@@ -81,14 +93,17 @@ class TruckController extends Controller
                 $query->where('maker', 'like', '%'.$words[2].'%')
                 ->orWhere('plate', 'like', '%'.$words[2].'%')
                 ->orWhere('make_year', 'like', '%'.$words[2].'%');
-                })->get();
+                })->paginate(self::PAGE_COUNT)->withQueryString()
+;
             } 
         }
         else {
-            $trucks = Truck::all(); 
+            $trucks = Truck::paginate(self::PAGE_COUNT)->withQueryString()
+; 
         }
 
-        $mechanics = Mechanic::all();
+        $mechanics = Mechanic::paginate(self::PAGE_COUNT)->withQueryString()
+;
 
         return view('truck.index', [
             'trucks' => $trucks,
@@ -107,7 +122,8 @@ class TruckController extends Controller
      */
     public function create()
     {
-        $mechanics = Mechanic::orderBy('surname')->get();;
+        $mechanics = Mechanic::orderBy('surname')->paginate(self::PAGE_COUNT)->withQueryString()
+;;
         return view('truck.create', ['mechanics' => $mechanics]);
     }
 
@@ -173,7 +189,8 @@ class TruckController extends Controller
      */
     public function edit(Truck $truck)
     {
-        $mechanics = Mechanic::orderBy('surname')->get();;
+        $mechanics = Mechanic::orderBy('surname')->paginate(self::PAGE_COUNT)->withQueryString()
+;;
         return view('truck.edit', compact('mechanics'), compact('truck'));
     }
 

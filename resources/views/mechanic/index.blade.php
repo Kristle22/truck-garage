@@ -8,6 +8,9 @@
                     <div class="card-header">Mechanics list</div>
 
                     <div class="card-body">
+                        <div class="m-3">
+                            {{ $mechanics->links() }}
+                        </div>
                         <ul class="list-group">
                             @foreach ($mechanics as $mechanic)
                                 <li class="list-group-item">
@@ -31,6 +34,9 @@
                                 </li>
                             @endforeach
                         </ul>
+                        <div class="m-3">
+                            {{ $mechanics->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -9,6 +9,8 @@ use Validator;
 
 class MechanicController extends Controller
 {
+    const PAGE_COUNT = 5;
+
     public function __construct()
     {
         $this->middleware('auth');
@@ -20,7 +22,8 @@ class MechanicController extends Controller
      */
     public function index()
     {
-        $mechanics = Mechanic::orderBy('surname')->get();
+        $mechanics = Mechanic::orderBy('surname')->paginate(self::PAGE_COUNT)->withQueryString()
+;
         // $mechanics = $mechanics->sortByDesc('surname');
         return view('mechanic.index', ['mechanics' => $mechanics]);
     }
