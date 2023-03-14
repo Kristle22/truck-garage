@@ -9,6 +9,7 @@ use App\Models\Mechanic;
 use Validator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
         // _dd(now()->format('Y'));
         // _dd(Date('Y'));
@@ -178,7 +179,8 @@ class TruckController extends Controller
      */
     public function show(Truck $truck)
     {
-        //
+        return view('truck.show', compact('truck'));
+
     }
 
     /**
@@ -243,4 +245,10 @@ class TruckController extends Controller
         $truck->delete();
         return redirect()->route('truck.index')->with('success_message', 'Sunkvezimis sekmingai ištrintas.');;
     }
+
+    public function pdf(Truck $truck) {
+        $pdf = Pdf::loadView('truck.pdf', compact('truck'));
+        return $pdf->download(ucfirst($truck->maker).'-'.$truck->make_year.'.pdf');
+    }
+
 }

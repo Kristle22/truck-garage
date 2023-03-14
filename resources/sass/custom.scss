@@ -30,6 +30,12 @@
     margin-top: 5px;
     float: right;
 }
+.card-body a {
+    margin-right: 5px;
+}
+.btn:hover {
+    color: white;
+}
 .row-item {
     display: flex;
     justify-content: space-between;
@@ -62,4 +68,27 @@
 }
 .pagination li {
     margin-bottom: 3px;
+}
+
+.item-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &__basic {
+        font-size: 15px;
+        letter-spacing: 1;
+        padding: 11px;
+        margin: 12px;
+        width: 60%;
+        display: flex;
+        justify-content: space-around;
+        border: 1px solid rgb(96, 146, 207);
+        border-radius: 3px;
+        p {
+            margin: 0;
+        }
+    }
+    &__about {
+        padding: 15px;
+    }
 }

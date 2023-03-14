@@ -101,6 +101,7 @@
                                         </div>
                                         <div class="row-item__btns">
                                             <a href="{{ route('truck.edit', $truck) }}" class="btn btn-info">Edit</a>
+                                            <a href="{{ route('truck.show', $truck) }}" class="btn btn-warning">Show</a>
                                             <form method="POST" action="{{ route('truck.destroy', $truck) }}">
                                                 <button type="submit" class="btn btn-danger">Delete</button>
                                                 @csrf

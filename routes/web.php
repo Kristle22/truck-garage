@@ -37,6 +37,9 @@ Route::group(['prefix' => 'mechanics'], function(){
     Route::post('update/{truck}', [TruckController::class, 'update'])->name('truck.update');
     Route::post('delete/{truck}', [TruckController::class, 'destroy'])->name('truck.destroy');
     Route::get('show/{truck}', [TruckController::class, 'show'])->name('truck.show');
+
+    Route::get('pdf/{truck}', [TruckController::class, 'pdf'])->name('truck.pdf');
+
  });
 
 Auth::routes(['register' => false]);
