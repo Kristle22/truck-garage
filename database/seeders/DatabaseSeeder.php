@@ -43,19 +43,20 @@ class DatabaseSeeder extends Seeder
         $currYear = Carbon::now()->format('Y');
         $makers = ['Tesla', 'Toyota', 'Porsche', 'Volkswagen', 'Mersedes-Benz', 'BMW', 'Ferrari', 'Ford', 'Honda', 'Hyundai', 'Kia', 'Suzuki Motor', 'Nissan', 'Volvo Car', 'Subaru', 'Renault', 'Isuzu', 'Polaris', 'Mitsubishi Motors', 'Mazda'];
         
-        foreach(range(1, 200) as $k => $_) {
+        foreach(range(1, 200) as $_) {
             $maker = $makers[rand(0, count($makers)-1)];
             // $photo = $faker->imageUrl(200, 300, rand(1, 200));
             // $photo = $faker->picsumUrl(200, 300);
             // $photo = $faker->picsumStaticRandomUrl(200, 300);
             // $photo = $faker->loremSpaceUrl($category='car', 200, 300);
-            $photo = $faker->imageUrl(300, 200, ['trucks'], false);
+            $photo = $faker->image($dir=public_path().'/truck-images', 300, 200, ['trucks'], false);
+            $photoPath = asset('truck-garage/public/truck-images/'.$photo);
         
             DB::table('trucks')->insert([
                 'maker' => $maker,
                 'plate' => $faker->vehicleRegistration,
                 'make_year' => $faker->numberBetween($minYear, $currYear),
-                'photo' => rand(0, 3) ? $photo : null, 
+                'photo' => rand(0, 3) ? $photoPath : null, 
                 'mechanic_notices' => $faker->realText(rand(50, 100)),
                 'mechanic_id' => rand(1, $mechCount)
             ]);
