@@ -83,6 +83,13 @@
                             @foreach ($trucks as $truck)
                                 <li class="list-group-item">
                                     <div class="row-item">
+                                        <div class="row-item__img">
+                                            @if ($truck->photo)
+                                                <img src="{{ $truck->photo }}" alt="{{ $truck->maker }}">
+                                            @else
+                                                <img src="{{ asset('img/no-img.png') }}" alt="{{ $truck->maker }}">
+                                            @endif
+                                        </div>
                                         <div class="row-item__basic">
                                             <span>
                                                 <h4>{{ $truck->maker }}</h4> Plate: <b>{{ $truck->plate }}</b>

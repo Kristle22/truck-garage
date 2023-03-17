@@ -38,12 +38,21 @@
 }
 .row-item {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    &__img {
+        img {
+            height: 200px;
+            width: auto;
+        }
+    }
     &__basic {
         display: flex;
         flex-direction: column;
+        max-width: 310px;
+        margin: 10px;
         small {
             color: gray;
             font-style: italic;
@@ -52,9 +61,12 @@
     }
     &__btns {
         display: flex;
+        min-width: 180px;
+        margin: 10px 0;
     }
     .btn {
         margin: 3px;
+
         &.btn-info {
             transform: rotate(2deg);
         }
@@ -90,5 +102,11 @@
     }
     &__about {
         padding: 15px;
+    }
+}
+.img {
+    img {
+        height: 200px;
+        width: auto;
     }
 }
