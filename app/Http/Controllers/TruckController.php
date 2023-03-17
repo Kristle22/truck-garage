@@ -256,6 +256,11 @@ class TruckController extends Controller
             $oldPhoto = $truck->photo ?? '@@@';
             $truck->photo = asset('/truck-images/'.$name);
 
+             // image intervention
+            $img = Image::make($destinationPath.$name);
+            $img->insert($destinationPath.'/watermark.png', 'bottom-right', 10, 10)->gamma(2.6);
+            $img->save($destinationPath.$name);
+
             // Trinam sena, jeigu ji yra
             $oldName = explode('/', $oldPhoto);
             $oldName = array_pop($oldName);
