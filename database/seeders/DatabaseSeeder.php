@@ -49,7 +49,7 @@ class DatabaseSeeder extends Seeder
             // $photo = $faker->picsumUrl(200, 300);
             // $photo = $faker->picsumStaticRandomUrl(200, 300);
             // $photo = $faker->loremSpaceUrl($category='car', 200, 300);
-            $photo = $faker->imageUrl(300, 200, ['trucks']);
+            $photo = $faker->imageUrl(300, 200, ['trucks'], false);
         
             DB::table('trucks')->insert([
                 'maker' => $maker,

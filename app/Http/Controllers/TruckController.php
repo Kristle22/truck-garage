@@ -99,7 +99,7 @@ class TruckController extends Controller
             } 
         }
         else {
-            $trucks = Truck::paginate(self::PAGE_COUNT)->withQueryString()
+            $trucks = Truck::orderBy('created_at', 'desc')->paginate(self::PAGE_COUNT)->withQueryString()
 ; 
         }
 
@@ -162,6 +162,23 @@ class TruckController extends Controller
        }
 
         $truck = new Truck;
+
+        $file = $request->file('truck_photo');
+        if ($file) {
+            $ext = $file->getClientOriginalExtension();
+            $name = rand(1000000, 9999999).'_'.rand(1000000, 9999999);
+            $name .= '.'.$ext;
+
+            $destinationPath = public_path().'/truck-images/';
+            $file->move($destinationPath, $name);
+            $truck->photo = asset('/truck-images/'.$name);
+            
+            // image intervention (composer require intervention/image)
+            // $img = Image::make($destinationPath.$name);
+            // $img->gamma(5.6)->flip('v');
+            // $img->save($destinationPath.$name);
+        }
+
         $truck->maker = $request->truck_maker;
         $truck->plate = $request->truck_plate;
         $truck->make_year = $request->truck_make_year;
@@ -225,6 +242,37 @@ class TruckController extends Controller
             return redirect()->back()->withErrors($validator);
         }
 
+        $file = $request->file('truck_photo');
+
+        if ($file) {
+            $ext = $file->getClientOriginalExtension();
+            $name = rand(1000000, 9999999).'_'.rand(1000000, 9999999);
+            $name .= '.'.$ext;
+            $destinationPath = public_path().'/truck-images/';
+
+            $file->move($destinationPath, $name);
+
+            $oldPhoto = $truck->photo ?? '@@@';
+            $truck->photo = asset('/truck-images/'.$name);
+
+            // Trinam sena, jeigu ji yra
+            $oldName = explode('/', $oldPhoto);
+            $oldName = array_pop($oldName);
+            if (file_exists($destinationPath.$oldName)) {
+                unlink($destinationPath.$oldName);
+            }
+        }
+        if ($request->truck_photo_deleted) {
+            $destinationPath = public_path().'/truck-images/';
+            $oldPhoto = $truck->photo ?? '@@@';
+            $truck->photo = null;
+            $oldName = explode('/', $oldPhoto);
+            $oldName = array_pop($oldName);
+            if (file_exists($destinationPath.$oldName)) {
+                unlink($destinationPath.$oldName);
+            }
+        }
+
         $truck->maker = $request->truck_maker;
         $truck->plate = $request->truck_plate;
         $truck->make_year = $request->truck_make_year;
@@ -242,6 +290,16 @@ class TruckController extends Controller
      */
     public function destroy(Truck $truck)
     {
+        $destinationPath = public_path().'/truck-images/';
+        $oldPhoto = $truck->photo ?? '@@@';
+
+        // Trinam sena, jeigu ji yra
+        $oldName = explode('/', $oldPhoto);
+        $oldName = array_pop($oldName);
+        if (file_exists($destinationPath.$oldName)) {
+            unlink($destinationPath.$oldName);
+         }
+
         $truck->delete();
         return redirect()->route('truck.index')->with('success_message', 'Sunkvezimis sekmingai ištrintas.');;
     }

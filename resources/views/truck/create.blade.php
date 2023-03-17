@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">Truck create</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('truck.store') }}">
+                        <form method="POST" action="{{ route('truck.store') }}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Maker</label>
                                 <input type="text" class="form-control" name="truck_maker"
@@ -30,6 +30,11 @@
                                 <label>Mechanic notices</label>
                                 <textarea class="form-control" name="truck_mechanic_notices">{{ old('truck_mechanic_notices') }}</textarea>
                                 <small class="form-text text-muted">Mechanic notices about truck.</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <input type="file" class="form-control" name="truck_photo">
+                                <small class="form-text text-muted">Truck image.</small>
                             </div>
                             <div class="form-group">
                                 <label>Mechanic</label>

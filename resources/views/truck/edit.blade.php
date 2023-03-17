@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">Truck edit</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('truck.update', $truck) }}">
+                        <form method="POST" action="{{ route('truck.update', $truck) }}" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Maker</label>
                                 <input type="text" class="form-control" name="truck_maker"
@@ -30,6 +30,23 @@
                                 <label>Mechanic notices</label>
                                 <textarea class="form-control" name="truck_mechanic_notices">{{ old('truck_mechanic_notices', $truck->mechanic_notices) }}</textarea>
                                 <small class="form-text text-muted">Mechanic notices about truck.</small>
+                            </div>
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <div class="img mb-2">
+                                    @if ($truck->photo)
+                                        <img src="{{ $truck->photo }}" alt="{{ $truck->maker }}">
+                                    @else
+                                        <img src="{{ asset('img/no-img.png') }}" alt="{{ $truck->maker }}">
+                                    @endif
+                                </div>
+                                <div class="mb-2">
+                                    <input type="checkbox" class="form-check-input me-1" name="truck_photo_deleted"
+                                        id="df">
+                                    <label for="df">Delete photo</label>
+                                </div>
+                                <input type="file" class="form-control" name="truck_photo">
+                                <small class="form-text text-muted">Truck image.</small>
                             </div>
                             <div class="form-group">
                                 <label>Mechanic</label>
