@@ -11,8 +11,15 @@
                     </div>
                     <div class="card-body">
                         <div class="item-container">
+                            <div class="item-container__img">
+                                @if ($truck->photo)
+                                    <img src="{{ $truck->photo }}" alt="{{ $truck->maker }}">
+                                @else
+                                    <img src="{{ asset('img/no-img.png') }}" alt="{{ $truck->maker }}">
+                                @endif
+                            </div>
                             <div class="item-container__basic">
-                                <p><b>{{ $truck->plate }}</b></p>
+                                <p>Plate: <b>{{ $truck->plate }}</b></p>
                                 <p>Make Year: <b>{{ $truck->make_year }}</b></p>
                             </div>
                         </div>

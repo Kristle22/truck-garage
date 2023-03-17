@@ -86,7 +86,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    &__img {
+        img {
+            height: 200px;
+            width: auto;
+        }
+    }
     &__basic {
+        flex-wrap: wrap;
         font-size: 15px;
         letter-spacing: 1;
         padding: 11px;
