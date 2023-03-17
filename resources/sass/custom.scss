@@ -51,7 +51,7 @@
     &__basic {
         display: flex;
         flex-direction: column;
-        max-width: 310px;
+        max-width: 180px;
         margin: 10px;
         small {
             color: gray;
@@ -61,7 +61,7 @@
     }
     &__btns {
         display: flex;
-        min-width: 180px;
+        max-width: 200px;
         margin: 10px 0;
     }
     .btn {
