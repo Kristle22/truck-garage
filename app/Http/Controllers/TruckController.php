@@ -10,6 +10,7 @@ use Validator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Intervention\Image\ImageManagerStatic as Image;
 
         // _dd(now()->format('Y'));
         // _dd(Date('Y'));
@@ -173,10 +174,10 @@ class TruckController extends Controller
             $file->move($destinationPath, $name);
             $truck->photo = asset('/truck-images/'.$name);
             
-            // image intervention (composer require intervention/image)
-            // $img = Image::make($destinationPath.$name);
-            // $img->gamma(5.6)->flip('v');
-            // $img->save($destinationPath.$name);
+            // image intervention
+            $img = Image::make($destinationPath.$name);
+            $img->insert($destinationPath.'/watermark.png', 'bottom-right', 10, 10)->gamma(2.6);
+            $img->save($destinationPath.$name);
         }
 
         $truck->maker = $request->truck_maker;
