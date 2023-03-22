@@ -66,8 +66,11 @@ class MechanicJsController extends Controller
         $mechanic->surname = $request->mechanic_surname;
         $mechanic->save();
 
+        $msgHtml = view('mechanic_js.messages', ['successMsg' => 'Mechanikas sėkmingai atnaujintas.'])->render();
+
         return response()->json([
-            'hash' => 'list'
+            'hash' => 'list',
+            'msg' => $msgHtml
         ]);
     }
 
