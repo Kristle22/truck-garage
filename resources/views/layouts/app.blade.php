@@ -17,6 +17,10 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    <script>
+        const apiUrl = '{{ route('mechanic-js.index') }}';
+    </script>
+
     <!-- include summernote css/js without bootstrap (lite)-->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
@@ -61,6 +65,20 @@
                             @endif
                         @else
                             <!-- NAV BAR -->
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Mechanics JS
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('mechanic-js.index') }}#list">
+                                        Mechanic JS List
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('mechanic-js.index') }}#create">
+                                        New Mechanic JS
+                                    </a>
+                                </div>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -145,7 +163,7 @@
                 </div>
             </div>
         </div>
-
+        <div class="container id" id="msg"> </div>
         <main class="py-4">
             @yield('content')
         </main>

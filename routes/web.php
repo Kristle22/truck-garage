@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MechanicController;
+use App\Http\Controllers\MechanicJsController;
 use App\Http\Controllers\TruckController;
 
 /*
@@ -39,8 +40,18 @@ Route::group(['prefix' => 'mechanics'], function(){
     Route::get('show/{truck}', [TruckController::class, 'show'])->name('truck.show');
 
     Route::get('pdf/{truck}', [TruckController::class, 'pdf'])->name('truck.pdf');
-
  });
+
+ Route::group(['prefix' => 'mechanics-js'], function(){
+    Route::get('', [MechanicJsController::class, 'index'])->name('mechanic-js.index');
+    Route::get('list', [MechanicJsController::class, 'list'])->name('mechanic-js.list');
+    Route::get('create', [MechanicJsController::class, 'create'])->name('mechanic-js.create');
+    Route::post('store', [MechanicJsController::class, 'store'])->name('mechanic-js.store');
+    Route::get('edit/{mechanic}', [MechanicJsController::class, 'edit'])->name('mechanic-js.edit');
+    Route::post('update/{mechanic}', [MechanicJsController::class, 'update'])->name('mechanic-js.update');
+    Route::post('delete/{mechanic}', [MechanicJsController::class, 'destroy'])->name('mechanic-js.destroy');
+ });
+
 
 Auth::routes(['register' => false]);
 

@@ -6,7 +6,6 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">Mechanics list</div>
-
                     <div class="card-body">
                         <div class="m-3">
                             {{ $mechanics->links() }}
